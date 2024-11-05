@@ -25,10 +25,12 @@ app.set('views', path.join(__dirname, 'views'));
 // Configurar la carpeta public para archivos estáticos
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-// Ruta de ejemplo
+// Ruta principal
 app.get('/', (req, res) => {
   res.render('index', { title: 'Multometro' });
 });
+
+
 
 // Iniciar el servidor
 app.listen(PORT, () => {
