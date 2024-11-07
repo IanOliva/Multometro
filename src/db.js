@@ -1,26 +1,20 @@
-// src/db.js
-
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise'); // Importar el módulo con soporte de promesas
 const dotenv = require('dotenv');
 
 // Configurar variables de entorno
 dotenv.config();
 
 // Crear la conexión a la base de datos
-const db = mysql.createConnection({
+const db = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
+  database: process.env.DB_NAME,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
-// Conectar a la base de datos
-db.connect((err) => {
-  if (err) {
-    console.error('Error al conectar a la base de datos:', err);
-    process.exit(1); // Salir del proceso en caso de error
-  }
-  console.log('Conectado a la base de datos');
-});
-
+// Exportar la conexión
 module.exports = db;
+
