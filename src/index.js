@@ -6,6 +6,7 @@ const dotenv = require('dotenv');
 const db = require('./db'); // Importar la conexión a la base de datos
 const path = require('path');
 
+
 // Configurar variables de entorno
 dotenv.config();
 
@@ -25,11 +26,17 @@ app.set('views', path.join(__dirname, 'views'));
 // Configurar la carpeta public para archivos estáticos
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-// Ruta principal
-app.get('/', (req, res) => {
-  res.render('index', { title: 'Multometro' });
-});
+// parse URL-encoded bodies para poder usar la data enviada de cualquier form
+app.use(express.urlencoded({ extended: false }));
 
+// parse json bodies para que la data enviada sea en formato json
+app.use(express.json());
+
+// Rutas home
+app.use('/', require('../routes/home'));
+
+// Rutas auth
+app.use('/auth', require('../routes/auth'));
 
 
 // Iniciar el servidor
