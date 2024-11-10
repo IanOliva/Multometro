@@ -48,7 +48,12 @@ exports.login = async (req, res) => {
   }
 };
 
-// Función para hashear la contraseña usando pbkdf2
+exports.logout = (req, res) => {
+  res.clearCookie("token");
+  res.redirect("/");
+};
+
+
 
 // Función para verificar la contraseña usando pbkdf2
 function verifyPassword(storedHash, password) {
