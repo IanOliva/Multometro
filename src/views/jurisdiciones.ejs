@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('components/head.ejs') %>
+<body>
+
+    <section>
+        <!-- formulario para cargar registros -->
+        <h1 class="text-2xl font-bold mb-4">
+            Estudio Juridico De SA y asociados
+        </h1>
+
+        <h3 class="text-lg my-4">Cargar Jurisdiccion</h3>
+
+        <form action="/dashboard/jurisdicciones" method="post">
+            <div class="mb-4">
+                <label for="jurisdiccion" class="block text-gray-700 font-bold mb-2">Jurisdiccion:</label>
+                <input type="text" id="jurisdiccion" name="jurisdiccion" class="w-full p-2 border border-gray-300 rounded-md" required>
+            </div>
+            <div class="mb-4">
+                <label for="porcentaje" class="block text-gray-700 font-bold mb-2">Porcentaje:</label>
+                <input type="number" id="porcentaje" name="porcentaje" class="w-full p-2 border border-gray-300 rounded-md" required>
+            </div>
+           
+            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md">Guardar</button>
+        </form>
+
+        <!-- tabla de registros -->
+        <h3 class="text-lg my-4">Listado de Jurisdicciones</h3>
+        <table class="w-full border-collapse">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="border border-gray-300 px-4 py-2">Jurisdiccion</th>
+                    <th class="border border-gray-300 px-4 py-2">Porcentaje</th>
+                    <th class="border border-gray-300 px-4 py-2">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% jurisdicciones.forEach((jurisdiccion) => { %>
+                    <tr>
+                        <td class="border border-gray-300 px-4 py-2"><%- jurisdiccion.nombre %></td>
+                        <td class="border border-gray-300 px-4 py-2"><%- jurisdiccion.porcentaje %></td>
+                        <td class="border border-gray-300 px-4 py-2">
+                            <a href="/dashboard/jurisdicciones/delete/<%- jurisdiccion.id %>" class="text-blue-500 hover:text-blue-600">Borrar</a> 
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+        
+
+    </section>
+    
+</body>
+</html>

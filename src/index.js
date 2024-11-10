@@ -38,6 +38,9 @@ app.use('/', require('../routes/home'));
 // Rutas auth
 app.use('/auth', require('../routes/auth'));
 
+// Rutas dashboard
+app.use('/dashboard', require('../routes/dashboard'));
+
 
 // Iniciar el servidor
 app.listen(PORT, () => {
