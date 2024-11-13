@@ -1,11 +1,16 @@
 const db = require('../src/db');
+const jwt = require('jsonwebtoken');
 
 exports.getDashboard = async (req, res) => {
-    try {
-        const [rows] = await db.execute('SELECT * FROM users');
-        res.render('dashboard', { users: rows });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error al obtener los usuarios');
-    }
+
+    const user = req.user;
+    const [jurisdicciones] = await db.execute('SELECT * FROM jurisdicciones');
+
+
+    res.render('dashboard', { 
+        title: 'Multometro',
+        user: user,
+        jurisdicciones: jurisdicciones,
+
+     });
 };

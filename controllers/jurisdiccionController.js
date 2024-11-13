@@ -1,11 +1,15 @@
 const db = require('../src/db');
+const jwt = require('jsonwebtoken');
 
 
 exports.getJurisdicciones = async (req, res) => {
     try {
+        const user = req.user;
+        
         const [rows] = await db.execute('SELECT * FROM jurisdicciones');
         res.render('jurisdiciones', { 
             title: 'Multometro',
+            user: user,
             jurisdicciones: rows });
     } catch (error) {
         console.error(error);

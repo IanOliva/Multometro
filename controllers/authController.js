@@ -7,41 +7,33 @@ exports.login = async (req, res) => {
 
   try {
     if (!username || !password) {
-      return res
-        .status(400)
-        .json({ message: "Por favor, ingrese usuario y contraseña" });
+      return res.status(400).json({ message: "Por favor, ingrese usuario y contraseña" });
     }
 
     // Consultar usuario en la base de datos
-    const [rows] = await db.execute("SELECT * FROM users WHERE username = ?", [
-      username,
-    ]);
+    const [rows] = await db.execute("SELECT * FROM users WHERE username = ?", [username]);
 
     if (rows.length === 0) {
-      return res
-        .status(401)
-        .json({ message: "Usuario o contraseña incorrectos" });
+      return res.status(401).json({ message: "Usuario o contraseña incorrectos" });
     }
 
     const user = rows[0];
-
-    // Verificar la contraseña con pbkdf2
     const passwordMatch = await verifyPassword(user.password, password);
 
     if (!passwordMatch) {
-      return res
-        .status(401)
-        .json({ message: "Usuario o contraseña incorrectos" });
+      return res.status(401).json({ message: "Usuario o contraseña incorrectos" });
     }
-    // Generar el JWT si el inicio de sesión es exitoso
-    const token = generateJWT(user);
 
-    // Aquí utilizamos res.render() para renderizar la vista EJS
-    res.render("dashboard", {
-      title: "Dashboard",
-      user: { id: user.id, username: user.username },
-      token: token,
+    // Generar el JWT y guardarlo en una cookie segura
+    const token = generateJWT(user);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 3600000,
     });
+
+    // Redirigir al usuario a /dashboard
+    res.redirect("/dashboard");
   } catch (error) {
     console.error("Error en el servidor:", error);
     res.status(500).json({ message: "Error en el servidor" });
