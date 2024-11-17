@@ -15,4 +15,6 @@ router.post('/jurisdicciones', jurisdiccionController.createJurisdiccion);
 
 router.get('/jurisdicciones/delete/:id', jurisdiccionController.deleteJurisdiccion);
 
+router.post('/multas/create', dashboardController.createMulta);
+
 module.exports = router;
