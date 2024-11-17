@@ -1,7 +1,323 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <%- include('components/head.ejs') %>
-<body>
-    
-</body>
+
+    <body class="bg-gray-900 font-sans leading-normal tracking-normal">
+
+        <%- include('components/dashboardNavbar.ejs')%>
+
+            <!--Container-->
+            <div class="container w-full mx-auto pt-20">
+
+                <div class="w-full px-4 md:px-0 md:mt-8 mb-16 text-gray-800 leading-normal">
+
+                    <!--Console Content-->
+
+                    <div class="flex flex-wrap ">
+                        <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                            <!--Metric Card-->
+                            <div class="bg-gray-900 border border-gray-800 rounded shadow p-2">
+                                <div class="flex flex-row items-center">
+                                    <div class="flex-shrink pr-4">
+                                        <div class="rounded p-3 bg-green-600"><i
+                                                class="fa fa-wallet fa-2x fa-fw fa-inverse"></i></div>
+                                    </div>
+                                    <div class="flex-1 text-right md:text-center">
+                                        <h5 class="font-bold uppercase text-gray-400">Multas registradas</h5>
+                                        <h3 class="font-bold text-3xl text-gray-600"><%- totalMultas %> <span
+                                                class="text-green-500"><i class="fas fa-caret-up"></i></span></h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/Metric Card-->
+                        </div>
+                        <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                            <!--Metric Card-->
+                            <div class="bg-gray-900 border border-gray-800 rounded shadow p-2">
+                                <div class="flex flex-row items-center">
+                                    <div class="flex-shrink pr-4">
+                                        <div class="rounded p-3 bg-pink-600"><i
+                                                class="fas fa-users fa-2x fa-fw fa-inverse"></i></div>
+                                    </div>
+                                    <div class="flex-1 text-right md:text-center">
+                                        <h5 class="font-bold uppercase text-gray-400">nombres</h5>
+                                        <h3 class="font-bold text-3xl text-gray-600">249 <span class="text-pink-500"><i
+                                                    class="fas fa-exchange-alt"></i></span></h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/Metric Card-->
+                        </div>
+
+                        <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                            <!--Metric Card-->
+                            <div class="bg-gray-900 border border-gray-800 rounded shadow p-2">
+                                <div class="flex flex-row items-center">
+                                    <div class="flex-shrink pr-4">
+                                        <div class="rounded p-3 bg-blue-600"><i
+                                                class="fas fa-server fa-2x fa-fw fa-inverse"></i></div>
+                                    </div>
+                                    <div class="flex-1 text-right md:text-center">
+                                        <h5 class="font-bold uppercase text-gray-400">Servidor activo</h5>
+                                        <h3 class="font-bold text-3xl text-gray-600">152 days</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/Metric Card-->
+                        </div>
+
+                    </div>
+
+                    <!--Divider-->
+                    <hr class="border-b-2 border-gray-600 my-8 mx-4">
+
+                    <section class="text-white">
+                        <!-- formulario para generar registros -->
+                        <h1 class="text-2xl font-bold mb-4">
+                            Cargar Multas
+                        </h1>
+
+                        <form action="/dashboard/multas/create" method="post">
+                            <!-- Fila de Valor, Jurisdicción y Total -->
+                            <div class="flex gap-4 mb-4">
+                                <div class="">
+                                    <label for="multa" class="block font-bold mb-2">Valor de la multa:</label>
+                                    <input type="number" id="multa" name="multa" class=" p-2 border border-gray-300 rounded-md text-black" required>
+                                </div>
+                                <div class="">
+                                    <label for="jurisdiccion" class="block font-bold mb-2">Jurisdicción:</label>
+                                    <select name="jurisdiccion" id="jurisdiccion" class=" p-2 border border-gray-300 rounded-md text-black" required>
+                                        <% jurisdicciones.forEach(jurisdiccion => { %>
+                                            <option value="<%= jurisdiccion.porcentaje %>" data-porcentaje="<%= jurisdiccion.porcentaje %>">
+                                                <%= jurisdiccion.nombre %>
+                                            </option>
+                                        <% }); %>
+                                    </select>
+                                </div>
+                                <div class="w-1/3">
+                                    <label for="total" class="block font-bold mb-2">Total:</label>
+                                    <input type="number" id="total" name="total" value="0" class="w-full p-2 border border-gray-300 rounded-md text-black" required>
+                                </div>
+                            </div>
+                        
+                            <!-- Fila de Nombre y Apellido -->
+                            <div class="flex justify-between mb-4">
+                                <div class="w-1/3 mr-4">
+                                    <label for="nombre" class="block font-bold mb-2">Nombre:</label>
+                                    <input type="text" id="nombre" name="nombre" class=" p-2 border border-gray-300 rounded-md text-black" required>
+                                </div>
+                                <div class="w-1/3 mr-4">
+                                    <label for="apellido" class="block font-bold mb-2">Apellido:</label>
+                                    <input type="text" id="apellido" name="apellido" class=" p-2 border border-gray-300 rounded-md text-black" required>
+                                </div>
+                                <div class="w-1/3">
+                                    <label for="dni" class="block font-bold mb-2">DNI:</label>
+                                    <input type="number" id="dni" name="dni" class=" p-2 border border-gray-300 rounded-md text-black" required>
+                                </div>
+                                <div class="w-1/3 mr-4">
+                                    <label for="patente" class="block font-bold mb-2">Patente:</label>
+                                    <input type="text" id="patente" name="patente" class=" p-2 border border-gray-300 rounded-md text-black" required>
+                                </div>
+                            </div>
+                        
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Guardar
+                            </button>
+                        </form>
+                        
+                    </section>
+                    <hr class="border-b-2 border-gray-600 my-8 mx-4">
+
+                    <div class="flex flex-row flex-wrap flex-grow mt-2">
+
+                        <div class="w-full p-3">
+                            <!--Table Card-->
+                            <div class="bg-gray-900 border border-gray-800 rounded shadow">
+                                <div class="border-b border-gray-800 p-3">
+                                    <h5 class="font-bold uppercase text-white">Table</h5>
+                                </div>
+                                <div class="p-5">
+                                    <table class="w-full p-5 text-white">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left text-gray-600">Multa ID</th>
+                                                <th class="text-left text-gray-600">nombre</th>
+                                                <th class="text-left text-gray-600">apellido</th>
+                                                <th class="text-left text-gray-600">DNI</th>
+                                                <th class="text-left text-gray-600">patente</th>
+                                                <th class="text-left text-gray-600">fecha</th>
+                                                <th colspan="2" class="text-center text-gray-600">Opciones</th>
+
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+
+
+                                            <% multas.forEach(multa => { %>
+                                                <tr class="border-b border-gray-800">
+                                                    <td><%= multa.id %></td>
+                                                    <td><%= multa.nombre %></td>
+                                                    <td><%= multa.apellido %></td>
+                                                    <td><%= multa.dni %></td>
+                                                    <td><%= multa.patente %></td>
+                                                    <td><%= multa.fecha %></td>
+                                                    <td>
+                                                        <a href="/dashboard/multas/edit/<%= multa.id %>" class="text-blue-500 hover:text-blue-600"><i class="fas fa-edit"></i></a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="/dashboard/multas/delete/<%= multa.id %>" class="text-red-500 hover:text-red-600"><i class="fas fa-trash"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <% }); %>
+                                                
+
+
+
+
+
+                                        </tbody>
+                                    </table>
+
+                                    <p class="py-2"><a href="#" class="text-white">See More issues...</a></p>
+
+                                </div>
+                            </div>
+                            <!--/table Card-->
+                        </div>
+
+
+                    </div>
+
+                    <!--/ Console Content-->
+
+                </div>
+
+
+            </div>
+            <!--/container-->
+
+            <footer class="bg-gray-900 border-t border-gray-400 shadow">
+                <div class="container max-w-md mx-auto flex py-8">
+
+                    <div class="w-full mx-auto flex flex-wrap">
+                        <div class="flex w-full md:w-1/2 ">
+                            <div class="px-8">
+                                <h3 class="font-bold  text-gray-100">About</h3>
+                                <p class="py-4 text-gray-600 text-sm">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel mi ut felis
+                                    tempus
+                                    commodo nec id erat. Suspendisse consectetur dapibus velit ut lacinia.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex w-full md:w-1/2">
+                            <div class="px-8">
+                                <h3 class="font-bold  text-gray-100">Social</h3>
+                                <ul class="list-reset items-center text-sm pt-3">
+                                    <li>
+                                        <a class="inline-block text-gray-600 no-underline hover:text-gray-100 hover:text-underline py-1"
+                                            href="#">Add social link</a>
+                                    </li>
+                                    <li>
+                                        <a class="inline-block text-gray-600 no-underline hover:text-gray-100 hover:text-underline py-1"
+                                            href="#">Add social link</a>
+                                    </li>
+                                    <li>
+                                        <a class="inline-block text-gray-600 no-underline hover:text-gray-100 hover:text-underline py-1"
+                                            href="#">Add social link</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </footer>
+
+            <script>
+
+
+                /*Toggle dropdown list*/
+
+                var userMenuDiv = document.getElementById("userMenu");
+                var userMenu = document.getElementById("userButton");
+
+                var navMenuDiv = document.getElementById("nav-content");
+                var navMenu = document.getElementById("nav-toggle");
+
+                document.onclick = check;
+
+                function check(e) {
+                    var target = (e && e.target) || (event && event.srcElement);
+
+                    //User Menu
+                    if (!checkParent(target, userMenuDiv)) {
+                        // click NOT on the menu
+                        if (checkParent(target, userMenu)) {
+                            // click on the link
+                            if (userMenuDiv.classList.contains("invisible")) {
+                                userMenuDiv.classList.remove("invisible");
+                            } else { userMenuDiv.classList.add("invisible"); }
+                        } else {
+                            // click both outside link and outside menu, hide menu
+                            userMenuDiv.classList.add("invisible");
+                        }
+                    }
+
+                    //Nav Menu
+                    if (!checkParent(target, navMenuDiv)) {
+                        // click NOT on the menu
+                        if (checkParent(target, navMenu)) {
+                            // click on the link
+                            if (navMenuDiv.classList.contains("hidden")) {
+                                navMenuDiv.classList.remove("hidden");
+                            } else { navMenuDiv.classList.add("hidden"); }
+                        } else {
+                            // click both outside link and outside menu, hide menu
+                            navMenuDiv.classList.add("hidden");
+                        }
+                    }
+
+                }
+
+                function checkParent(t, elm) {
+                    while (t.parentNode) {
+                        if (t == elm) { return true; }
+                        t = t.parentNode;
+                    }
+                    return false;
+                }
+
+
+            </script>
+
+            <!-- Script para calcular el total en función de la multa y el porcentaje de la jurisdicción -->
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const multaInput = document.getElementById("multa");
+                    const jurisdiccionSelect = document.getElementById("jurisdiccion");
+                    const totalInput = document.getElementById("total");
+
+                    function calcularTotal() {
+                        const multa = parseFloat(multaInput.value) || 0;
+                        const selectedOption = jurisdiccionSelect.options[jurisdiccionSelect.selectedIndex];
+                        const porcentaje = parseFloat(selectedOption.getAttribute("data-porcentaje")) || 0;
+
+                        // Calcular el total como porcentaje de la multa
+                        const total = (multa * porcentaje) / 100;
+                        totalInput.value = Math.round(total); // Mostrar el total 
+                    }
+
+                    // Escuchar eventos de cambio y entrada en los inputs
+                    multaInput.addEventListener("input", calcularTotal);
+                    jurisdiccionSelect.addEventListener("change", calcularTotal);
+                });
+            </script>
+
+    </body>
+
 </html>

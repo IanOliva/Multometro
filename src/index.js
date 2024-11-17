@@ -5,6 +5,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const db = require('./db'); // Importar la conexión a la base de datos
 const path = require('path');
+const cookieParser = require('cookie-parser');
 
 
 // Configurar variables de entorno
@@ -32,11 +33,16 @@ app.use(express.urlencoded({ extended: false }));
 // parse json bodies para que la data enviada sea en formato json
 app.use(express.json());
 
+app.use(cookieParser()); // Habilitar el uso de cookies
+
 // Rutas home
 app.use('/', require('../routes/home'));
 
 // Rutas auth
 app.use('/auth', require('../routes/auth'));
+
+// Rutas dashboard
+app.use('/dashboard', require('../routes/dashboard'));
 
 
 // Iniciar el servidor

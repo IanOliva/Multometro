@@ -10,6 +10,9 @@ router.get('/login', (req, res) => {
 
 router.post('/login', authController.login);
 
+// ruta logout
+router.get('/logout', authController.logout);
+
 // router.get('/hash', async(req, res) => {
 //     const password = 'admin.123'; 
 //     const hashedPassword = await hashPassword(password);

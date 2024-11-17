@@ -2,16 +2,17 @@
 <html lang="en">
 <%- include('components/head.ejs') %>
 
-  <body>
-    <div class="flex items-center justify-center h-screen bg-gradient-to-t from-blue-400 to-white text-white  p-5">
+  <body class="bg-[url('/img/background.jpg')] bg-contain bg-center bg-no-repeat">
+    <div class="flex items-center justify-center h-screen  text-white  p-5">
       <main
         class="flex flex-col justify-center items-center w-1/2 p-8 font-sans bg-gray-900 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-20 border border-gray-100">
+        
+        
+        
         <h1 class="text-2xl font-bold mb-4">
           <%= title %>
         </h1>
-        <p class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem ipsa odio aliquid
-          accusantium beatae, officia possimus esse perspiciatis dolorum eius perferendis ex ipsam vitae voluptatibus
-          minima natus reiciendis earum neque?</p>
+        <h3 class="text-lg my-4">Estudio Juridico De SA y asociados</h3>
         <!-- Botón con estilos modernos -->
         <a href="/auth/login" class="inline-block px-6 py-3 text-lg font-semibold text-white transition duration-300 ease-in-out transform bg-blue-600 rounded-lg shadow-lg hover:bg-blue-700 hover:shadow-xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
           Ingresar
