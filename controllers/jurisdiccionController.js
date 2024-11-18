@@ -32,7 +32,7 @@ exports.deleteJurisdiccion = async (req, res) => {
     const { id } = req.params;
     try {
         await db.execute('DELETE FROM jurisdicciones WHERE id = ?', [id]);
-        res.send('Registro eliminado exitosamente');
+        res.send('Jurisdiccion eliminada exitosamente');
     } catch (error) {
         console.error(error);
         res.status(500).send('Error al eliminar el registro');
