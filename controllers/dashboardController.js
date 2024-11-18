@@ -41,5 +41,16 @@ exports.createMulta = async (req, res) => {
     }
 };
 
+exports.deleteMulta = async (req, res) => {
+    const { id } = req.params;
+    try {
+        await db.execute('DELETE FROM multas WHERE id = ?', [id]);
+        res.send('Multa eliminada exitosamente');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error al eliminar el registro');
+    }
+};
+
 
 
