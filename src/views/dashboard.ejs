@@ -25,7 +25,7 @@
                                     <div class="flex-1 text-right md:text-center">
                                         <h5 class="font-bold uppercase text-gray-400">Multas registradas</h5>
                                         <h3 class="font-bold text-3xl text-gray-600"><%- totalMultas %> <span
-                                                class="text-green-500"><i class="fas fa-caret-up"></i></span></h3>
+                                                    class="text-green-500"><i class="fas fa-caret-up"></i></span></h3>
                                     </div>
                                 </div>
                             </div>
@@ -77,54 +77,63 @@
                             Cargar Multas
                         </h1>
 
-                        <form action="/dashboard/multas/create" method="post">
+                        <form action="/dashboard/multas/create" method="post" id="multaForm">
                             <!-- Fila de Valor, Jurisdicción y Total -->
                             <div class="flex gap-4 mb-4">
                                 <div class="">
                                     <label for="multa" class="block font-bold mb-2">Valor de la multa:</label>
-                                    <input type="number" id="multa" name="multa" class=" p-2 border border-gray-300 rounded-md text-black" required>
+                                    <input type="number" id="multa" name="multa"
+                                        class=" p-2 border border-gray-300 rounded-md text-black" required>
                                 </div>
                                 <div class="">
                                     <label for="jurisdiccion" class="block font-bold mb-2">Jurisdicción:</label>
-                                    <select name="jurisdiccion" id="jurisdiccion" class=" p-2 border border-gray-300 rounded-md text-black" required>
-                                        <% jurisdicciones.forEach(jurisdiccion => { %>
-                                            <option value="<%= jurisdiccion.porcentaje %>" data-porcentaje="<%= jurisdiccion.porcentaje %>">
+                                    <select name="jurisdiccion" id="jurisdiccion"
+                                        class=" p-2 border border-gray-300 rounded-md text-black" required>
+                                        <% jurisdicciones.forEach(jurisdiccion=> { %>
+                                            <option value="<%= jurisdiccion.porcentaje %>"
+                                                data-porcentaje="<%= jurisdiccion.porcentaje %>">
                                                 <%= jurisdiccion.nombre %>
                                             </option>
-                                        <% }); %>
+                                            <% }); %>
                                     </select>
                                 </div>
                                 <div class="w-1/3">
                                     <label for="total" class="block font-bold mb-2">Total:</label>
-                                    <input type="number" id="total" name="total" value="0" class="w-full p-2 border border-gray-300 rounded-md text-black" required>
+                                    <input type="number" id="total" name="total" value="0"
+                                        class="w-full p-2 border border-gray-300 rounded-md text-black" required>
                                 </div>
                             </div>
-                        
+
                             <!-- Fila de Nombre y Apellido -->
                             <div class="flex justify-between mb-4">
                                 <div class="w-1/3 mr-4">
                                     <label for="nombre" class="block font-bold mb-2">Nombre:</label>
-                                    <input type="text" id="nombre" name="nombre" class=" p-2 border border-gray-300 rounded-md text-black" required>
+                                    <input type="text" id="nombre" name="nombre"
+                                        class=" p-2 border border-gray-300 rounded-md text-black" required>
                                 </div>
                                 <div class="w-1/3 mr-4">
                                     <label for="apellido" class="block font-bold mb-2">Apellido:</label>
-                                    <input type="text" id="apellido" name="apellido" class=" p-2 border border-gray-300 rounded-md text-black" required>
+                                    <input type="text" id="apellido" name="apellido"
+                                        class=" p-2 border border-gray-300 rounded-md text-black" required>
                                 </div>
                                 <div class="w-1/3">
                                     <label for="dni" class="block font-bold mb-2">DNI:</label>
-                                    <input type="number" id="dni" name="dni" class=" p-2 border border-gray-300 rounded-md text-black" required>
+                                    <input type="number" id="dni" name="dni"
+                                        class=" p-2 border border-gray-300 rounded-md text-black" required>
                                 </div>
                                 <div class="w-1/3 mr-4">
                                     <label for="patente" class="block font-bold mb-2">Patente:</label>
-                                    <input type="text" id="patente" name="patente" class=" p-2 border border-gray-300 rounded-md text-black" required>
+                                    <input type="text" id="patente" name="patente"
+                                        class=" p-2 border border-gray-300 rounded-md text-black" required>
                                 </div>
                             </div>
-                        
-                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+
+                            <button type="submit"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                 Guardar
                             </button>
                         </form>
-                        
+
                     </section>
                     <hr class="border-b-2 border-gray-600 my-8 mx-4">
 
@@ -134,52 +143,150 @@
                             <!--Table Card-->
                             <div class="bg-gray-900 border border-gray-800 rounded shadow">
                                 <div class="border-b border-gray-800 p-3">
-                                    <h5 class="font-bold uppercase text-white">Table</h5>
+                                    <h5 class="font-bold uppercase text-white">Multas registradas</h5>
                                 </div>
                                 <div class="p-5">
-                                    <table class="w-full p-5 text-white">
+                                    <table class="w-full border-collapse text-white">
                                         <thead>
-                                            <tr>
-                                                <th class="text-left text-gray-600">Multa ID</th>
-                                                <th class="text-left text-gray-600">nombre</th>
-                                                <th class="text-left text-gray-600">apellido</th>
-                                                <th class="text-left text-gray-600">DNI</th>
-                                                <th class="text-left text-gray-600">patente</th>
-                                                <th class="text-left text-gray-600">fecha</th>
-                                                <th colspan="2" class="text-center text-gray-600">Opciones</th>
+                                            <tr class="bg-gray-600">
+                                                <th class="border border-gray-300 px-4 py-2">Multa ID</th>
+                                                <th class="border border-gray-300 px-4 py-2">nombre</th>
+                                                <th class="border border-gray-300 px-4 py-2">apellido</th>
+                                                <th class="border border-gray-300 px-4 py-2">DNI</th>
+                                                <th class="border border-gray-300 px-4 py-2">patente</th>
+                                                <th class="border border-gray-300 px-4 py-2">fecha</th>
+                                                <th colspan="2" class="border border-gray-300 px-4 py-2">Opciones</th>
 
                                             </tr>
                                         </thead>
 
                                         <tbody>
-
-
-                                            <% multas.forEach(multa => { %>
-                                                <tr class="border-b border-gray-800">
-                                                    <td><%= multa.id %></td>
-                                                    <td><%= multa.nombre %></td>
-                                                    <td><%= multa.apellido %></td>
-                                                    <td><%= multa.dni %></td>
-                                                    <td><%= multa.patente %></td>
-                                                    <td><%= multa.fecha %></td>
-                                                    <td>
-                                                        <a href="/dashboard/multas/edit/<%= multa.id %>" class="text-blue-500 hover:text-blue-600"><i class="fas fa-edit"></i></a>
+                                            <% multas.forEach(multa=> { %>
+                                                <tr>
+                                                    <td class="border border-gray-300 px-4 py-2">
+                                                        <%= multa.id %>
                                                     </td>
-                                                    <td>
-                                                        <a href="/dashboard/multas/delete/<%= multa.id %>" class="text-red-500 hover:text-red-600"><i class="fas fa-trash"></i></a>
+                                                    <td class="border border-gray-300 px-4 py-2">
+                                                        <%= multa.nombre %>
+                                                    </td>
+
+                                                    <td class="border border-gray-300 px-4 py-2">
+                                                        <%= multa.apellido %>
+                                                    </td>
+
+
+                                                    <td class="border border-gray-300 px-4 py-2">
+                                                        <%= multa.dni %>
+
+                                                    </td>
+                                                    <td class="border border-gray-300 px-4 py-2">
+                                                        <%= multa.patente %>
+                                                    </td>
+                                                    <td class="border border-gray-300 px-4 py-2">
+                                                        <%= multa.fecha %>
+                                                    </td>
+                                                    <td class="border border-gray-300 px-4 py-2">
+                                                        <a href="#"
+                                                            class="text-blue-500 hover:text-blue-600 edit-button"
+                                                            data-id="<%= multa.id %>" data-nombre="<%= multa.nombre %>"
+                                                            data-apellido="<%= multa.apellido %>"
+                                                            data-dni="<%= multa.dni %>"
+                                                            data-patente="<%= multa.patente %>"
+                                                            data-multa="<%= multa.monto %>"
+                                                            data-jurisdiccion="<%= multa.descuento %>">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
+                                                    </td>
+                                                    <td class="border border-gray-300 px-4 py-2">
+                                                        <a href="/dashboard/multas/delete/<%= multa.id %>"
+                                                            class="text-red-500 hover:text-red-600 delete-button"
+                                                            data-id="<%= multa.id %>">
+                                                            <i class="fas fa-trash "></i>
+                                                        </a>
                                                     </td>
                                                 </tr>
                                                 <% }); %>
-                                                
-
-
-
-
-
                                         </tbody>
                                     </table>
 
-                                    <p class="py-2"><a href="#" class="text-white">See More issues...</a></p>
+                                    <!-- Modal -->
+                                    <div id="editModal"
+                                        class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
+                                        <div class="bg-white p-6 rounded-lg w-full max-w-lg">
+                                            <h2 class="text-lg font-bold mb-4">Editar Multa</h2>
+                                            <form id="editForm">
+                                                <input type="hidden" id="editId" name="id">
+
+                                                <div class="flex flex-row justify-between mt-2">
+                                                    <div class="mb-4">
+                                                        <label for="editNombre"
+                                                            class="block font-bold mb-2">Nombre:</label>
+                                                        <input type="text" id="editNombre" name="nombre"
+                                                            class="w-full p-2 border rounded">
+                                                    </div>
+
+                                                    <div class="mb-4">
+                                                        <label for="editApellido"
+                                                            class="block font-bold mb-2">Apellido:</label>
+                                                        <input type="text" id="editApellido" name="apellido"
+                                                            class="w-full p-2 border rounded">
+                                                    </div>
+                                                </div>
+
+                                                <div class="flex flex-row justify-between mt-2">
+                                                    <div class="mb-4">
+                                                        <label for="editDni" class="block font-bold mb-2">DNI:</label>
+                                                        <input type="number" id="editDni" name="dni"
+                                                            class="w-full p-2 border rounded">
+                                                    </div>
+
+                                                    <div class="mb-4">
+                                                        <label for="editPatente"
+                                                            class="block font-bold mb-2">Patente:</label>
+                                                        <input type="text" id="editPatente" name="patente"
+                                                            class="w-full p-2 border rounded">
+                                                    </div>
+                                                </div>
+
+                                                <div class="flex flex-row justify-between mt-2">
+                                                    <div class="mb-4">
+                                                        <label for="editMulta"
+                                                            class="block font-bold mb-2">Monto:</label>
+                                                        <input type="number" id="editMulta" name="multa"
+                                                            class="w-full p-2 border rounded" required>
+                                                    </div>
+
+                                                    <div class="mb-4">
+                                                        <label for="editJurisdiccion"
+                                                            class="block font-bold mb-2">Jurisdicción:</label>
+                                                        <select id="editJurisdiccion" name="jurisdiccion"
+                                                            class="w-full p-2 border rounded" required>
+                                                            <% jurisdicciones.forEach(jurisdiccion=> { %>
+                                                                <option value="<%= jurisdiccion.porcentaje %>">
+                                                                    <%= jurisdiccion.nombre %>
+                                                                </option>
+                                                                <% }); %>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-4">
+                                                    <label for="editTotal" class="block font-bold mb-2">Total:</label>
+                                                    <input type="number" id="editTotal" name="total"
+                                                        class="w-full p-2 border rounded" readonly>
+                                                </div>
+
+                                                <div class="flex justify-end">
+                                                    <button type="button" id="cancelEdit"
+                                                        class="mr-2 bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded"
+                                                        onclick="closeEditModal()">Cancelar</button>
+                                                    <button type="submit"
+                                                        class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Guardar</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
 
                                 </div>
                             </div>
@@ -197,126 +304,11 @@
             </div>
             <!--/container-->
 
-            <footer class="bg-gray-900 border-t border-gray-400 shadow">
-                <div class="container max-w-md mx-auto flex py-8">
-
-                    <div class="w-full mx-auto flex flex-wrap">
-                        <div class="flex w-full md:w-1/2 ">
-                            <div class="px-8">
-                                <h3 class="font-bold  text-gray-100">About</h3>
-                                <p class="py-4 text-gray-600 text-sm">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel mi ut felis
-                                    tempus
-                                    commodo nec id erat. Suspendisse consectetur dapibus velit ut lacinia.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="flex w-full md:w-1/2">
-                            <div class="px-8">
-                                <h3 class="font-bold  text-gray-100">Social</h3>
-                                <ul class="list-reset items-center text-sm pt-3">
-                                    <li>
-                                        <a class="inline-block text-gray-600 no-underline hover:text-gray-100 hover:text-underline py-1"
-                                            href="#">Add social link</a>
-                                    </li>
-                                    <li>
-                                        <a class="inline-block text-gray-600 no-underline hover:text-gray-100 hover:text-underline py-1"
-                                            href="#">Add social link</a>
-                                    </li>
-                                    <li>
-                                        <a class="inline-block text-gray-600 no-underline hover:text-gray-100 hover:text-underline py-1"
-                                            href="#">Add social link</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+            <%- include('components/footer.ejs') %>
 
 
-
-                </div>
-            </footer>
-
-            <script>
-
-
-                /*Toggle dropdown list*/
-
-                var userMenuDiv = document.getElementById("userMenu");
-                var userMenu = document.getElementById("userButton");
-
-                var navMenuDiv = document.getElementById("nav-content");
-                var navMenu = document.getElementById("nav-toggle");
-
-                document.onclick = check;
-
-                function check(e) {
-                    var target = (e && e.target) || (event && event.srcElement);
-
-                    //User Menu
-                    if (!checkParent(target, userMenuDiv)) {
-                        // click NOT on the menu
-                        if (checkParent(target, userMenu)) {
-                            // click on the link
-                            if (userMenuDiv.classList.contains("invisible")) {
-                                userMenuDiv.classList.remove("invisible");
-                            } else { userMenuDiv.classList.add("invisible"); }
-                        } else {
-                            // click both outside link and outside menu, hide menu
-                            userMenuDiv.classList.add("invisible");
-                        }
-                    }
-
-                    //Nav Menu
-                    if (!checkParent(target, navMenuDiv)) {
-                        // click NOT on the menu
-                        if (checkParent(target, navMenu)) {
-                            // click on the link
-                            if (navMenuDiv.classList.contains("hidden")) {
-                                navMenuDiv.classList.remove("hidden");
-                            } else { navMenuDiv.classList.add("hidden"); }
-                        } else {
-                            // click both outside link and outside menu, hide menu
-                            navMenuDiv.classList.add("hidden");
-                        }
-                    }
-
-                }
-
-                function checkParent(t, elm) {
-                    while (t.parentNode) {
-                        if (t == elm) { return true; }
-                        t = t.parentNode;
-                    }
-                    return false;
-                }
-
-
-            </script>
-
-            <!-- Script para calcular el total en función de la multa y el porcentaje de la jurisdicción -->
-            <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                    const multaInput = document.getElementById("multa");
-                    const jurisdiccionSelect = document.getElementById("jurisdiccion");
-                    const totalInput = document.getElementById("total");
-
-                    function calcularTotal() {
-                        const multa = parseFloat(multaInput.value) || 0;
-                        const selectedOption = jurisdiccionSelect.options[jurisdiccionSelect.selectedIndex];
-                        const porcentaje = parseFloat(selectedOption.getAttribute("data-porcentaje")) || 0;
-
-                        // Calcular el total como porcentaje de la multa
-                        const total = (multa * porcentaje) / 100;
-                        totalInput.value = Math.round(total); // Mostrar el total 
-                    }
-
-                    // Escuchar eventos de cambio y entrada en los inputs
-                    multaInput.addEventListener("input", calcularTotal);
-                    jurisdiccionSelect.addEventListener("change", calcularTotal);
-                });
-            </script>
+                <script src="/js/scripts.js"></script>
+                <script src="/js/multasHandler.js"></script>
 
     </body>
 

@@ -1,112 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include('components/head.ejs') %>
-<body class="bg-gray-900 font-sans leading-normal tracking-normal ">
 
-    <%- include('components/dashboardNavbar.ejs') %>
+    <body class="bg-gray-900 font-sans leading-normal tracking-normal ">
 
-    <section class="container w-full mx-auto pt-20 text-white my-8">
-        <!-- formulario para cargar registros -->
-        <h1 class="text-2xl font-bold mb-4">
-            Estudio Juridico De SA y asociados
-        </h1>
+        <%- include('components/dashboardNavbar.ejs') %>
 
-        <h3 class="text-lg my-4">Cargar Jurisdiccion</h3>
+            <section class="container w-full mx-auto pt-20 text-white my-8">
+                <!-- formulario para cargar registros -->
+                <h1 class="text-2xl font-bold mb-4">
+                    Estudio Juridico De SA y asociados
+                </h1>
 
-        <form action="/dashboard/jurisdicciones" method="post">
-            <div class="mb-4 ">
-                <label for="jurisdiccion" class="block  font-bold mb-2">Jurisdiccion:</label>
-                <input type="text" id="jurisdiccion" name="jurisdiccion" class="w-full p-2 border border-gray-300 rounded-md text-black" required>
+                <h3 class="text-lg my-4">Cargar Jurisdiccion</h3>
+
+                <form action="/dashboard/jurisdicciones/create" method="post" id="jurisdiccionForm">
+                    <div class="mb-4 ">
+                        <label for="jurisdiccion" class="block  font-bold mb-2">Jurisdiccion:</label>
+                        <input type="text" id="jurisdiccion" name="jurisdiccion"
+                            class="w-full p-2 border border-gray-300 rounded-md text-black" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="porcentaje" class="block  font-bold mb-2">Porcentaje:</label>
+                        <input type="number" id="porcentaje" name="porcentaje"
+                            class="w-full p-2 border border-gray-300 rounded-md text-black" required>
+                    </div>
+
+                    <button type="submit"
+                        class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md">Guardar</button>
+                </form>
+
+
+
+                <!-- tabla de registros -->
+                <h3 class="text-lg my-4">Listado de Jurisdicciones</h3>
+                <table class="w-full border-collapse text-white">
+                    <thead>
+                        <tr class="bg-gray-600">
+                            <th class="border border-gray-300 px-4 py-2">Jurisdiccion</th>
+                            <th class="border border-gray-300 px-4 py-2">Porcentaje</th>
+                            <th colspan=2 class="border border-gray-300 px-4 py-2">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% jurisdicciones.forEach((jurisdiccion)=> { %>
+                            <tr>
+                                <td class="border border-gray-300 px-4 py-2"><%- jurisdiccion.nombre %></td>
+                                <td class="border border-gray-300 px-4 py-2"><%- jurisdiccion.porcentaje %> %</td>
+                                <td class="border border-gray-300 px-4 py-2">
+                                    <a href="#" class="text-blue-500 hover:text-blue-600 edit-jurisdiccion-button"
+                                        data-id="<%= jurisdiccion.id %>" data-nombre="<%= jurisdiccion.nombre %>"
+                                        data-porcentaje="<%= jurisdiccion.porcentaje %>">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                </td>
+                                <td class="border border-gray-300 px-4 py-2">
+                                    <a href="/dashboard/jurisdicciones/delete/<%- jurisdiccion.id %>"
+                                        class="text-red-500 hover:text-blue-600 delete-button"
+                                        data-id="<%- jurisdiccion.id %>">
+                                        <i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                            <% }); %>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Modal -->
+            <div id="editJurisdiccionModal"
+                class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
+                <div class="bg-white p-6 rounded-lg w-full max-w-lg">
+                    <h2 class="text-lg font-bold mb-4">Editar Jurisdicción</h2>
+                    <form id="editJurisdiccionForm">
+                        <input type="hidden" id="editJurisdiccionId" name="id">
+
+                        <div class="mb-4">
+                            <label for="editJurisdiccionNombre" class="block font-bold mb-2">Nombre:</label>
+                            <input type="text" id="editJurisdiccionNombre" name="nombre"
+                                class="w-full p-2 border rounded" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="editJurisdiccionPorcentaje" class="block font-bold mb-2">Porcentaje:</label>
+                            <input type="number" id="editJurisdiccionPorcentaje" name="porcentaje"
+                                class="w-full p-2 border rounded" step="0.01" required>
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button type="button" id="cancelEditJurisdiccion"
+                                class="px-4 py-2 bg-gray-500 text-white rounded mr-2">Cancelar</button>
+                            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded">Guardar
+                                Cambios</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="mb-4">
-                <label for="porcentaje" class="block  font-bold mb-2">Porcentaje:</label>
-                <input type="number" id="porcentaje" name="porcentaje" class="w-full p-2 border border-gray-300 rounded-md text-black" required>
-            </div>
-           
-            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md">Guardar</button>
-        </form>
 
-        <!-- tabla de registros -->
-        <h3 class="text-lg my-4">Listado de Jurisdicciones</h3>
-        <table class="w-full border-collapse text-white">
-            <thead>
-                <tr class="bg-gray-600">
-                    <th class="border border-gray-300 px-4 py-2">Jurisdiccion</th>
-                    <th class="border border-gray-300 px-4 py-2">Porcentaje</th>
-                    <th class="border border-gray-300 px-4 py-2">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% jurisdicciones.forEach((jurisdiccion) => { %>
-                    <tr>
-                        <td class="border border-gray-300 px-4 py-2"><%- jurisdiccion.nombre %></td>
-                        <td class="border border-gray-300 px-4 py-2"><%- jurisdiccion.porcentaje %> %</td>
-                        <td class="border border-gray-300 px-4 py-2">
-                            <a href="/dashboard/jurisdicciones/delete/<%- jurisdiccion.id %>" class="text-blue-500 hover:text-blue-600"><i class="fas fa-trash"></i></a> 
-                        </td>
-                    </tr>
-                <% }); %>
-            </tbody>
-        </table>
-        
-
-    </section>
-    <script>
+            <%- include('components/footer.ejs') %>
 
 
-        /*Toggle dropdown list*/
-        /*https://gist.github.com/slavapas/593e8e50cf4cc16ac972afcbad4f70c8*/
+                <script src="/js/scripts.js"></script>
+                <script src="/js/jurisdiccionHandler.js"></script>
+    </body>
 
-        var userMenuDiv = document.getElementById("userMenu");
-        var userMenu = document.getElementById("userButton");
-
-        var navMenuDiv = document.getElementById("nav-content");
-        var navMenu = document.getElementById("nav-toggle");
-
-        document.onclick = check;
-
-        function check(e) {
-            var target = (e && e.target) || (event && event.srcElement);
-
-            //User Menu
-            if (!checkParent(target, userMenuDiv)) {
-                // click NOT on the menu
-                if (checkParent(target, userMenu)) {
-                    // click on the link
-                    if (userMenuDiv.classList.contains("invisible")) {
-                        userMenuDiv.classList.remove("invisible");
-                    } else { userMenuDiv.classList.add("invisible"); }
-                } else {
-                    // click both outside link and outside menu, hide menu
-                    userMenuDiv.classList.add("invisible");
-                }
-            }
-
-            //Nav Menu
-            if (!checkParent(target, navMenuDiv)) {
-                // click NOT on the menu
-                if (checkParent(target, navMenu)) {
-                    // click on the link
-                    if (navMenuDiv.classList.contains("hidden")) {
-                        navMenuDiv.classList.remove("hidden");
-                    } else { navMenuDiv.classList.add("hidden"); }
-                } else {
-                    // click both outside link and outside menu, hide menu
-                    navMenuDiv.classList.add("hidden");
-                }
-            }
-
-        }
-
-        function checkParent(t, elm) {
-            while (t.parentNode) {
-                if (t == elm) { return true; }
-                t = t.parentNode;
-            }
-            return false;
-        }
-
-
-    </script>
-</body>
 </html>
