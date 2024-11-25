@@ -57,15 +57,21 @@ exports.createMulta = async (req, res) => {
 
 exports.updateMulta = async (req, res) => {
     const { id } = req.params;
-    const { nombre, apellido, dni, patente, multa, jurisdiccion } = req.body;
+    const { nombre, apellido, dni, patente, total, jurisdiccion } = req.body;
+
     try {
+        
+       
+
+        // Actualización de la multa con el total calculado
         await db.execute(
-            "UPDATE multas SET nombre = ?, apellido = ?, dni = ?, patente = ?, monto = ?, descuento = ? WHERE id = ?",
-            [nombre, apellido, dni, patente, multa, jurisdiccion, id]
+            "UPDATE multas SET nombre = ?, apellido = ?, dni = ?, patente = ?, monto = ?, descuento = ?  WHERE id = ?",
+            [nombre, apellido, dni, patente, total, jurisdiccion, id]
         );
+
         return res
             .status(200)
-            .json({ success: true, message: "Multa actualizada" });
+            .json({ success: true, message: "Multa actualizada correctamente" });
     } catch (error) {
         console.error(error);
         return res
@@ -73,6 +79,7 @@ exports.updateMulta = async (req, res) => {
             .json({ success: false, message: "Error al actualizar la multa" });
     }
 };
+
 
 exports.deleteMulta = async (req, res) => {
     const { id } = req.params;

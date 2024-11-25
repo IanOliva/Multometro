@@ -188,8 +188,7 @@
                                                     <td class="border border-gray-300 px-4 py-2">
                                                         <a href="#"
                                                             class="text-blue-500 hover:text-blue-600 edit-button"
-                                                            data-id="<%= multa.id %>" 
-                                                            data-nombre="<%= multa.nombre %>"
+                                                            data-id="<%= multa.id %>" data-nombre="<%= multa.nombre %>"
                                                             data-apellido="<%= multa.apellido %>"
                                                             data-dni="<%= multa.dni %>"
                                                             data-patente="<%= multa.patente %>"
@@ -234,7 +233,6 @@
                                                     </div>
                                                 </div>
 
-
                                                 <div class="flex flex-row justify-between mt-2">
                                                     <div class="mb-4">
                                                         <label for="editDni" class="block font-bold mb-2">DNI:</label>
@@ -255,28 +253,40 @@
                                                         <label for="editMulta"
                                                             class="block font-bold mb-2">Monto:</label>
                                                         <input type="number" id="editMulta" name="multa"
-                                                            class="w-full p-2 border rounded">
+                                                            class="w-full p-2 border rounded" required>
                                                     </div>
 
                                                     <div class="mb-4">
                                                         <label for="editJurisdiccion"
                                                             class="block font-bold mb-2">Jurisdicción:</label>
-                                                        <input type="number" id="editJurisdiccion" name="jurisdiccion"
-                                                            class="w-full p-2 border rounded">
+                                                        <select id="editJurisdiccion" name="jurisdiccion"
+                                                            class="w-full p-2 border rounded" required>
+                                                            <% jurisdicciones.forEach(jurisdiccion=> { %>
+                                                                <option value="<%= jurisdiccion.porcentaje %>">
+                                                                    <%= jurisdiccion.nombre %>
+                                                                </option>
+                                                                <% }); %>
+                                                        </select>
                                                     </div>
                                                 </div>
 
+                                                <div class="mb-4">
+                                                    <label for="editTotal" class="block font-bold mb-2">Total:</label>
+                                                    <input type="number" id="editTotal" name="total"
+                                                        class="w-full p-2 border rounded" readonly>
+                                                </div>
 
-                                                <div class="flex justify-around">
+                                                <div class="flex justify-end">
                                                     <button type="button" id="cancelEdit"
-                                                        class="px-4 py-2 bg-gray-500 text-white rounded mr-2">Cancelar</button>
+                                                        class="mr-2 bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded"
+                                                        onclick="closeEditModal()">Cancelar</button>
                                                     <button type="submit"
-                                                        class="px-4 py-2 bg-blue-500 text-white rounded">Guardar
-                                                        Cambios</button>
+                                                        class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Guardar</button>
                                                 </div>
                                             </form>
                                         </div>
                                     </div>
+
 
                                 </div>
                             </div>

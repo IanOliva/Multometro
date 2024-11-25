@@ -122,13 +122,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-
-// modal de edicion
+// edicion
 document.addEventListener('DOMContentLoaded', () => {
     const editButtons = document.querySelectorAll('.edit-button');
     const editModal = document.getElementById('editModal');
     const editForm = document.getElementById('editForm');
     const cancelEdit = document.getElementById('cancelEdit');
+
+    // Actualiza el total al cambiar el monto o la jurisdicción
+    const updateTotal = () => {
+        const multa = parseFloat(document.getElementById('editMulta').value) || 0;
+        const porcentaje = parseFloat(document.getElementById('editJurisdiccion').value) || 0;
+        const total = (multa * (1 + porcentaje / 100)).toFixed(2); // Calcula el total
+        document.getElementById('editTotal').value = total;
+    };
+
+    // Añade event listeners para calcular el total
+    document.getElementById('editMulta').addEventListener('input', updateTotal);
+    document.getElementById('editJurisdiccion').addEventListener('change', updateTotal);
 
     // Rellena el modal con los datos del botón clicado
     editButtons.forEach(button => {
@@ -150,6 +161,9 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('editMulta').value = multa;
             document.getElementById('editJurisdiccion').value = jurisdiccion;
 
+            // Calcula el total inicial
+            updateTotal();
+
             // Muestra el modal
             editModal.classList.remove('hidden');
         });
@@ -163,10 +177,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Envía el formulario
     editForm.addEventListener('submit', async (event) => {
         event.preventDefault();
-
+        
         const formData = new FormData(editForm);
         const data = Object.fromEntries(formData.entries());
-
+        
+         // Mostrar en la consola la información enviada
+    
         try {
             const response = await fetch(`/dashboard/multas/edit/${data.id}`, {
                 method: 'POST', // Cambia según el método que uses en tu backend
@@ -175,6 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             const result = await response.json();
+        
 
             if (result.success) {
                 Swal.fire({
@@ -213,3 +230,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
