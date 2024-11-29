@@ -122,6 +122,41 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// crear multa
+
+document.addEventListener("DOMContentLoaded", function () {
+    const multaInput = document.getElementById("multa");
+    const jurisdiccionSelect = document.getElementById("jurisdiccion");
+    const totalInput = document.getElementById("total");
+
+    // Función para calcular el total con dos decimales
+    function calcularTotal(multa, porcentaje) {
+        const multaValue = parseFloat(multa) || 0;
+        const porcentajeValue = parseFloat(porcentaje) || 0;
+
+        // Calcula el total como porcentaje de la multa
+        const total = (multaValue * porcentajeValue) / 100;
+
+        // Devuelve el resultado con dos decimales
+        return parseFloat(total.toFixed(2));
+    }
+
+    // Función para manejar los cambios en los inputs y actualizar el total
+    function actualizarTotal() {
+        const multa = multaInput.value;
+        const selectedOption = jurisdiccionSelect.options[jurisdiccionSelect.selectedIndex];
+        const porcentaje = selectedOption ? selectedOption.getAttribute("data-porcentaje") : 0;
+
+        // Calcula y asigna el total
+        const total = calcularTotal(multa, porcentaje);
+        totalInput.value = total;
+    }
+
+    // Escuchar eventos de cambio y entrada en los inputs
+    multaInput.addEventListener("input", actualizarTotal);
+    jurisdiccionSelect.addEventListener("change", actualizarTotal);
+});
+
 // edicion
 document.addEventListener('DOMContentLoaded', () => {
     const editButtons = document.querySelectorAll('.edit-button');
@@ -133,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateTotal = () => {
         const multa = parseFloat(document.getElementById('editMulta').value) || 0;
         const porcentaje = parseFloat(document.getElementById('editJurisdiccion').value) || 0;
-        const total = (multa * (1 + porcentaje / 100)).toFixed(2); // Calcula el total
+        const total = multa * porcentaje / 100;  // Calcula el total
         document.getElementById('editTotal').value = total;
     };
 
@@ -160,6 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('editPatente').value = patente;
             document.getElementById('editMulta').value = multa;
             document.getElementById('editJurisdiccion').value = jurisdiccion;
+            document.getElementById('editTotal').value = total;
 
             // Calcula el total inicial
             updateTotal();

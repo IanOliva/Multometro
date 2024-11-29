@@ -40,8 +40,8 @@ exports.createMulta = async (req, res) => {
     try {
         // Inserta los valores necesarios, dejando que MySQL maneje id y fecha automáticamente
         await db.execute(
-            "INSERT INTO multas (nombre, apellido, dni, patente, monto, descuento) VALUES (?, ?, ?, ?, ?, ?)",
-            [nombre, apellido, dni, patente, multa, jurisdiccion]
+            "INSERT INTO multas (nombre, apellido, dni, patente, monto, descuento,total) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            [nombre, apellido, dni, patente, multa, jurisdiccion, total]
         );
 
         return res
@@ -57,7 +57,7 @@ exports.createMulta = async (req, res) => {
 
 exports.updateMulta = async (req, res) => {
     const { id } = req.params;
-    const { nombre, apellido, dni, patente, total, jurisdiccion } = req.body;
+    const { nombre, apellido, dni, patente, multa, jurisdiccion, total  } = req.body;
 
     try {
         
@@ -65,8 +65,8 @@ exports.updateMulta = async (req, res) => {
 
         // Actualización de la multa con el total calculado
         await db.execute(
-            "UPDATE multas SET nombre = ?, apellido = ?, dni = ?, patente = ?, monto = ?, descuento = ?  WHERE id = ?",
-            [nombre, apellido, dni, patente, total, jurisdiccion, id]
+            "UPDATE multas SET nombre = ?, apellido = ?, dni = ?, patente = ?, monto = ?, descuento = ?, total = ?  WHERE id = ?",
+            [nombre, apellido, dni, patente, multa, jurisdiccion, total,  id]
         );
 
         return res
