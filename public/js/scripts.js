@@ -55,27 +55,7 @@ function checkParent(t, elm) {
 
 
 
-//  Script para calcular el total en función de la multa y el porcentaje de la jurisdicción
 
-document.addEventListener("DOMContentLoaded", function () {
-    const multaInput = document.getElementById("multa");
-    const jurisdiccionSelect = document.getElementById("jurisdiccion");
-    const totalInput = document.getElementById("total");
-
-    function calcularTotal() {
-        const multa = parseFloat(multaInput.value) || 0;
-        const selectedOption = jurisdiccionSelect.options[jurisdiccionSelect.selectedIndex];
-        const porcentaje = parseFloat(selectedOption.getAttribute("data-porcentaje")) || 0;
-
-        // Calcular el total como porcentaje de la multa
-        const total = (multa * porcentaje) / 100;
-        totalInput.value = Math.round(total); // Mostrar el total 
-    }
-
-    // Escuchar eventos de cambio y entrada en los inputs
-    multaInput.addEventListener("input", calcularTotal);
-    jurisdiccionSelect.addEventListener("change", calcularTotal);
-});
 
 
 

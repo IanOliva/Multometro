@@ -188,12 +188,16 @@
                                                     <td class="border border-gray-300 px-4 py-2">
                                                         <a href="#"
                                                             class="text-blue-500 hover:text-blue-600 edit-button"
-                                                            data-id="<%= multa.id %>" data-nombre="<%= multa.nombre %>"
+                                                            data-id="<%= multa.id %>" 
+                                                            data-nombre="<%= multa.nombre %>"
                                                             data-apellido="<%= multa.apellido %>"
                                                             data-dni="<%= multa.dni %>"
                                                             data-patente="<%= multa.patente %>"
                                                             data-multa="<%= multa.monto %>"
-                                                            data-jurisdiccion="<%= multa.descuento %>">
+                                                            data-jurisdiccion="<%= multa.descuento %>"
+                                                            data-total = "<%= multa.total %>"
+                                                            >
+
                                                             <i class="fas fa-edit"></i>
                                                         </a>
                                                     </td>
@@ -273,7 +277,7 @@
                                                 <div class="mb-4">
                                                     <label for="editTotal" class="block font-bold mb-2">Total:</label>
                                                     <input type="number" id="editTotal" name="total"
-                                                        class="w-full p-2 border rounded" readonly>
+                                                        class="w-full p-2 border rounded">
                                                 </div>
 
                                                 <div class="flex justify-end">
